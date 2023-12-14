@@ -36,9 +36,11 @@ def load_data(args):
         
     return books_data, users_data
 
+
 def search(param, db):
     results = []
     return results
+
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -46,6 +48,23 @@ def parse_args():
     parser.add_argument('-u', type=str, required=True, help="users csv file path")
     args, _ = parser.parse_known_args()
     return args
+
+
+def on_exit(books, users, books_file, users_file):
+
+    def write_file(contents, file):
+        with open(file, 'w') as fp:
+            fp.write(f'{",".join(contents[0].keys())}\n')
+            lines = list(map(lambda content: f'{",".join(content.values())}\n', contents))
+            for line in lines:
+                fp.write(line)
+
+    print("Saving...")
+    write_file(books, 'new_'+books_file)
+    write_file(users, 'new_'+users_file)
+    print("Saved")
+    exit(0)
+
 
 def display_result(results):
     if results:
@@ -84,3 +103,4 @@ def display_result(results):
 
     else:
         print("No results\n")
+
