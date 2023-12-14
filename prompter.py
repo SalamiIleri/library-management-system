@@ -1,7 +1,7 @@
 # from utils import search, lend_book, on_exit, \
 #                 display_result, return_book
 
-from utils import search, display_result
+from utils import search, display_result, lend_book, on_exit
 
 def prompter(books, users, **kwargs):
     
