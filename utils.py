@@ -3,7 +3,6 @@ import functools
 from pprint import pprint
 
 def load_data(args):
-
     def to_dict(item, keys):
         _dict = {}
         data = item.strip().split(",")
@@ -33,14 +32,26 @@ def load_data(args):
         'keys': users_keys, 
         'data': list(map(functools.partial(to_dict, keys=users_keys), users[1:]))
         }
-        
+    #print ("books_data =", books_data)
+    #print ("users_data =", users_data)    
     return books_data, users_data
 
 
 def search(param, db):
+    data_db=db.copy()
+    print(type(data_db))
+    search_field=""
     results = []
+    # print(param)
+    # print(db)
+    if "user_surname" in data_db[-1].keys():
+        search_field="user_surname"
+    else:
+        search_field="author_surname"
+    for item in data_db:
+        if item[search_field]==param:
+            results.append(item)
     return results
-
 
 def parse_args():
     parser = argparse.ArgumentParser()
